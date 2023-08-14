@@ -97,3 +97,7 @@ exports.login = function (req, res) {
     }
   });
 };
+
+exports.Testing = function (req, res) {
+  response.ok("Testing", res);
+};
