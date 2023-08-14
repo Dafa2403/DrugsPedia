@@ -1,12 +1,12 @@
 "use strict";
 
 module.exports = function (app) {
-  var jsonku = require("../controller/users-controller");
+  var jsonku = require("../controller/drugs-controller");
 
   app.route("/").get(jsonku.index);
-  app.route("/users").get(jsonku.getUsers);
-  app.route("/users/:id_user").get(jsonku.getUserById);
-  app.post("/register", jsonku.tambahUsers);
-  app.put("/editUser", jsonku.ubahUsers);
-  app.delete("/deleteUser", jsonku.hapusUsers);
+  app.route("/drugs").get(jsonku.getDrugs);
+  app.route("/drugs/:id_drugs").get(jsonku.getDrugsById);
+  app.post("/addDrugs", jsonku.tambahDrugs);
+  app.put("/editDrugs", jsonku.ubahDrugs);
+  app.delete("/deleteDrugs", jsonku.hapusDrugs);
 };
