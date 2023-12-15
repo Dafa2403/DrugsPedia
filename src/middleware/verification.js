@@ -4,7 +4,7 @@ const config = require("../config/secret");
 function verification() {
   return function (req, rest, next) {
     var role = 1;
-    console.log(role);
+
     var tokenWithBearer = req.headers.authorization;
     if (tokenWithBearer) {
       var token = tokenWithBearer.split(" ")[1];

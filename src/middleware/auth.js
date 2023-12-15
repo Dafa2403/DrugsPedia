@@ -6,6 +6,7 @@ var jwt = require("jsonwebtoken");
 var config = require("../config/secret");
 var ip = require("ip");
 
+// signup
 exports.register = function (req, res) {
   var post = {
     name: req.body.name,
@@ -67,7 +68,11 @@ exports.login = function (req, res) {
         var token = jwt.sign({ rows }, config.secret, {
           expiresIn: 3600,
         });
+        console.log(rows[0].name);
         id_user = rows[0].id_user;
+        names = rows[0].name;
+        username = rows[0].username;
+        email = rows[0].email;
 
         var data = {
           id_user: id_user,
@@ -88,6 +93,9 @@ exports.login = function (req, res) {
               message: "Token JWT generated!",
               token: token,
               currUser: data.id_user,
+              name: names,
+              username: username,
+              email: email,
             });
           }
         });
@@ -98,6 +106,74 @@ exports.login = function (req, res) {
   });
 };
 
+// lihat data user
+exports.getUsers = function (req, res) {
+  var query = "SELECT * FROM ??";
+  var table = ["users"];
+
+  query = mysql.format(query, table);
+  connection.query(query, function (error, rows) {
+    if (error) {
+      console.log(error);
+    } else {
+      response.ok(rows, res);
+    }
+  });
+};
+
 exports.Testing = function (req, res) {
   response.ok("Testing", res);
+};
+
+// ??? edit data users
+exports.ubahUsers = function (req, res) {
+  var username = req.body.username;
+  var name = req.body.name;
+  var email = req.body.email;
+  var pswd = req.body.password;
+
+  connection.query(
+    "UPDATE users SET name=?, email=?, password=? WHERE username=?",
+    [name, email, pswd, username],
+    function (error, rows, fields) {
+      if (error) {
+        console.log(error);
+      } else {
+        response.ok("Berhasil Ubah Data user!", res);
+      }
+    }
+  );
+};
+
+exports.hapusUsers = function (req, res) {
+  var id_user = req.body.id_user;
+
+  connection.query(
+    "DELETE FROM users WHERE id_user=?",
+    [id_user],
+    function (error, rows, fields) {
+      if (error) {
+        console.log(error);
+      } else {
+        response.ok("Berhasil Hapus user!", res);
+      }
+    }
+  );
+};
+
+exports.deleteToken = function (req, res) {
+  console.log("🚀 ~ file: auth.js:165 ~ exports.deleteToken ~ req:", req)
+  var id_user = req.body.id_user
+  var token = req.body.token
+
+  var query = "DELETE FROM users_token WHERE id_user=?";
+
+  query = mysql.format(query, [id_user]);
+  connection.query(query, function (error, rows) {
+    if (error) {
+      console.log(error);
+    } else {
+      response.ok("User Logout", res)
+    }
+  });
 };
