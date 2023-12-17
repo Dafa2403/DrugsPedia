@@ -1,5 +1,6 @@
 # DrugsPedia
 
 #Jalankan Server
-node main.js
+1. npm install
+2. nodemon main
 
