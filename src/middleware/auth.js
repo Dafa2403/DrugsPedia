@@ -173,7 +173,7 @@ exports.deleteToken = function (req, res) {
     if (error) {
       console.log(error);
     } else {
-      response.ok("User Logout", res)
+      response.ok("User Logout", res) 
     }
   });
 };
