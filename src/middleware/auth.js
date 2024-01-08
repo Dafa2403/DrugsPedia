@@ -14,6 +14,7 @@ exports.register = function (req, res) {
     email: req.body.email,
     password: md5(req.body.password),
     role: req.body.role,
+    imgProfile: req.file.filename
   };
 
   var query = "SELECT email FROM ?? WHERE ??=?";
@@ -73,6 +74,7 @@ exports.login = function (req, res) {
         names = rows[0].name;
         username = rows[0].username;
         email = rows[0].email;
+        imgProfile = rows[0].imgProfile
 
         var data = {
           id_user: id_user,
@@ -96,6 +98,7 @@ exports.login = function (req, res) {
               name: names,
               username: username,
               email: email,
+              imgProfile: imgProfile
             });
           }
         });
@@ -131,10 +134,11 @@ exports.ubahUsers = function (req, res) {
   var name = req.body.name;
   var email = req.body.email;
   var pswd = req.body.password;
+  var imgProfile = req.file.filename
 
   connection.query(
-    "UPDATE users SET name=?, email=?, password=? WHERE username=?",
-    [name, email, pswd, username],
+    "UPDATE users SET name=?, email=?, password=?, imgProfile=? WHERE username=?",
+    [name, email, pswd, username, imgProfile],
     function (error, rows, fields) {
       if (error) {
         console.log(error);
@@ -162,7 +166,6 @@ exports.hapusUsers = function (req, res) {
 };
 
 exports.deleteToken = function (req, res) {
-  console.log("🚀 ~ file: auth.js:165 ~ exports.deleteToken ~ req:", req)
   var id_user = req.body.id_user
   var token = req.body.token
 

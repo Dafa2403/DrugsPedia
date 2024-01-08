@@ -39,7 +39,7 @@ exports.tambahDrugs = function (req, res) {
   var drugs_name = req.body.drugs_name;
   var subTitle = req.body.subTitle;
   var deskripsi = req.body.deskripsi;
-  var image = req.body.image;
+  var image = req.file.filename;
 
   connection.query(
     "INSERT INTO drugs (id_user,drugs_name,subTitle,deskripsi,image) VALUES(?,?,?,?,?)",
