@@ -4,7 +4,9 @@
   "description": "server for drugspedia-app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd .. && cd admin-drugs-pedia && npm start",
+    "dev": "concurrently \"nodemon main.js\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   "homepage": "https://github.com/Dafa2403/DrugsPedia#readme",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "ip": "^1.1.8",
